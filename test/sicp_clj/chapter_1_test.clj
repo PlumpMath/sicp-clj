@@ -87,5 +87,16 @@
                    (err better-sqrt))))))
 
 (deftest ex-1-8-test
-  (testing "cube roots"
-    (= 3.0 (cube-root 27))))
+  (let [err (fn [n cube-root-fn]
+              (abs (- n (apply * (repeat 3 (cube-root-fn n))))))]
+    (testing "cube roots"
+      (is (< (err 27 cube-root)
+             0.001))
+      (is (< (err 1.0E5 cube-root)
+             0.001))
+      (is (< (err 1.0E10 cube-root)
+             1))
+      (is (< (err 1.0E19 cube-root)
+             10000))
+      (is (< (err 1.0E30 cube-root)
+             100000)))))

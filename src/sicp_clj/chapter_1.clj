@@ -116,6 +116,9 @@
         iter (fn iter [guess x]
                (if (good-enough? guess x)
                  guess
-                 (iter (improve guess x) x)))]
+                 (let [next-guess (improve guess x)]
+                   (if (= guess next-guess)
+                     guess
+                     (iter next-guess x)))))]
     (iter 1.0 x)))
 
