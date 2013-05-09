@@ -1,13 +1,13 @@
 # sicp-clj
 
-A Clojure library designed to ... well, that part is up to you.
+[SICP](http://mitpress.mit.edu/sicp/) in Clojure, one namespace per chapter plus tests. 
 
 ## Usage
 
-FIXME
+`lein test`
 
 ## License
 
-Copyright © 2013 FIXME
+Copyright © 2013
 
 Distributed under the Eclipse Public License, the same as Clojure.
