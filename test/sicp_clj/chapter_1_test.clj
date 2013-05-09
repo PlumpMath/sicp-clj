@@ -2,6 +2,14 @@
   (:use clojure.test
         sicp-clj.chapter-1))
 
+(deftest abs-test
+  (is (= 1.0 (abs 1.0)))
+  (is (= 1.0 (abs -1.0)))
+  (is (= 0.0 (abs 0.0)))
+  (is (= 1 (abs 1)))
+  (is (= 1 (abs -1)))
+  (is (= 0 (abs 0))))
+
 (def a 3)
 (def b 4)
 
@@ -55,10 +63,25 @@
     (is (thrown? StackOverflowError
                  (sqrt-iter-with-new-if 1.0 2)))))
 
+(defn error-magnitude
+  [n sqrt-fn]
+  (abs (- n (square (sqrt-fn n)))))
+
 (deftest ex-1-7-test
-  (testing "sqrt isn't great for very small numbers"
-    (is (= 0 (sqrt 0.0001))))
-  (testing "better-sqrt is better"
-    (is (= 0 (sqrt 0.0001)))))
-
-
+  (testing "better-sqrt is better than sqrt for very small numbers"
+    (let [err (partial error-magnitude 0.0001)]
+      (is (< (err better-sqrt)
+             (err sqrt)))))
+  (testing "better-sqrt works (at all) for (some) very big numbers"
+    (let [n 1.0E23
+          err (partial error-magnitude n)]
+      (is (thrown? StackOverflowError
+                   (err sqrt)))
+      (is (better-good-enough? (better-sqrt n) n))))
+  (testing "better-sqrt still fails with reeeeeally big numbers"
+    (let [n 1.0E50
+          err (partial error-magnitude n)]
+      (is (thrown? StackOverflowError
+                   (err sqrt)))
+      (is (thrown? StackOverflowError
+                   (err better-sqrt))))))

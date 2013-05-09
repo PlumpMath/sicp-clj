@@ -8,7 +8,7 @@
   [x]
   (cond
     (> x 0) x
-    (= x 0) 0
+    (zero? x) x
     (< x 0) (- x)))
 
 ; Exercise 1.3. Define a procedure that takes three numbers as arguments and
@@ -88,4 +88,19 @@
           (sqrt-iter-with-new-if (improve guess x)
                                  x)))
 
+(defn better-good-enough?
+  [guess x]
+  (< (abs (- x (square guess)))
+     (* guess 0.001)))
+
+(defn better-sqrt-iter
+  [guess x]
+  (if (better-good-enough? guess x)
+    guess
+    (better-sqrt-iter (improve guess x)
+                      x)))
+
+(defn better-sqrt
+  [x]
+  (better-sqrt-iter 1.0 x))
 
