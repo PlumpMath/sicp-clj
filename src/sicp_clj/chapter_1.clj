@@ -104,3 +104,18 @@
   [x]
   (better-sqrt-iter 1.0 x))
 
+(defn cube-root
+  [x]
+  (let [good-enough? (fn [guess x]
+                       (< (abs (- x (* guess guess guess)))
+                          (* guess 0.001)))
+        improve (fn [guess x]
+                  (/ (+ (/ x (square guess))
+                        (* 2 guess))
+                     3))
+        iter (fn iter [guess x]
+               (if (good-enough? guess x)
+                 guess
+                 (iter (improve guess x) x)))]
+    (iter 1.0 x)))
+

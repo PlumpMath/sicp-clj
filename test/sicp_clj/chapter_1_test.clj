@@ -85,3 +85,7 @@
                    (err sqrt)))
       (is (thrown? StackOverflowError
                    (err better-sqrt))))))
+
+(deftest ex-1-8-test
+  (testing "cube roots"
+    (= 3.0 (cube-root 27))))
