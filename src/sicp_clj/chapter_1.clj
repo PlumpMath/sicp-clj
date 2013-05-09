@@ -18,7 +18,7 @@
   (->> [x y z]
        sort
        (drop 1)
-       (map #(* % %))
+       (map square)
        (apply +)))
 
 ; Exercise 1.4. Observe that our model of evaluation allows for combinations
